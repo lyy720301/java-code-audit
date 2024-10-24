@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.StudentMapper">
+
+    <!--    注意这里不能用$，如果用$，则不会按照任何顺序排序
+            凡是字符串但又不能加引号的位置都不能预编译参数化，这种场景不仅order by，还有group by。
+    -->
+    <select id="selectOrderedStudent" resultType="org.example.Student" parameterType="string">
+        select * from student order by ${column} desc;
+    </select>
+
+</mapper>
