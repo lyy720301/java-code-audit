@@ -89,7 +89,7 @@ public class SQLTest {
         List<Student> students = mapper.selectOrderedStudent("age");
         System.out.println(students);
         System.out.println("\n\n");
-        List<Student> students1 = mapper.selectOrderedStudent("if(1=1,age,no)");
+        List<Student> students1 = mapper.selectOrderedStudent("if(1=1,no,age)");
         System.out.println(students1);
     }
 }
