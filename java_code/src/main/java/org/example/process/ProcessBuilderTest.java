@@ -1,4 +1,4 @@
-package org.example;
+package org.example.process;
 
 public class ProcessBuilderTest {
     public static void main(String[] args) {
