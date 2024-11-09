@@ -1,10 +1,18 @@
 package org.example;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class PiTask implements Task<BigDecimal>, Serializable {
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        System.out.println("B: readObject 这里可以进行反序列化攻击");
+    }
+
 
     private static final long serialVersionUID = 227L;
 

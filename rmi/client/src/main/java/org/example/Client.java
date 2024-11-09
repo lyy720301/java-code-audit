@@ -1,12 +1,13 @@
 package org.example;
 
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import java.math.BigDecimal;
 import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -18,7 +19,8 @@ import java.util.Hashtable;
  */
 public class Client {
 
-    static String RMI_NAME = "Compute";
+    static String RMI_COMPUTE = "Compute";
+    static String RMI_NEW_API = "NewApi";
 
     public static void main(String[] args) {
         if (System.getSecurityManager() == null) {
@@ -27,9 +29,13 @@ public class Client {
         try {
 
             PiTask task = new PiTask(Integer.parseInt("2"));
-            Compute comp = getByJNDI();
+            Compute comp = (Compute) directGet(RMI_COMPUTE);
             BigDecimal pi = comp.executeTask(task);
             System.out.println(pi);
+            NewApi newApi = (NewApi) directGet(RMI_NEW_API);
+            newApi.run();
+
+            jndi2();
         } catch (Exception e) {
             System.err.println("ComputePi exception:");
             e.printStackTrace();
@@ -37,9 +43,22 @@ public class Client {
     }
 
     // 直接获取接口
-    static Compute directGet() throws RemoteException, NotBoundException {
+    static Remote directGet(String rmiName) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(8971);
-        return (Compute) registry.lookup(RMI_NAME);
+        return registry.lookup(rmiName);
+    }
+
+    static void jndi2() {
+        try {
+            InitialContext initialContext = new InitialContext();
+            Object lookup = initialContext.lookup("rmi://localhost:8971/" + RMI_NEW_API);
+            ((NewApi) lookup).run();
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -57,7 +76,7 @@ public class Client {
         env.put(Context.PROVIDER_URL, providerURL);
         try {
             DirContext context = new InitialDirContext(env);
-            Compute compute = (Compute) context.lookup(RMI_NAME);
+            Compute compute = (Compute) context.lookup(RMI_COMPUTE);
             return compute;
         } catch (NamingException e) {
             throw new RuntimeException(e);

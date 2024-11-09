@@ -30,10 +30,13 @@ public class ServerCompute implements Compute {
             Compute engine = new ServerCompute();
             Compute stub =
                 (Compute) UnicastRemoteObject.exportObject(engine, 0);
-//            Registry reg = LocateRegistry.createRegistry(8971);
             Registry reg = LocateRegistry.getRegistry(8971);
-
             reg.rebind(name, stub);
+            // 再发布一个
+            NewApi newApi = new NewApiImpl();
+            NewApi stub2 =
+                    (NewApi) UnicastRemoteObject.exportObject(newApi, 0);
+            reg.rebind("NewApi", stub2);
             System.out.println("ServerCompute bound");
         } catch (Exception e) {
             System.err.println("ServerCompute exception:");
