@@ -12,6 +12,8 @@ import java.rmi.RemoteException;
  * NamingManager.java 中getObjectFactoryFromReference方法定义了加载逻辑，如果当前类路径中不存在，则从codebase
  * 中加载
  *
+ * 介绍codebase的文章 https://docs.oracle.com/javase/1.5.0/docs/guide/rmi/codebase.html
+ *
  * 核心是Reference类
  *
  * 堆栈如下
@@ -45,6 +47,7 @@ public class Client2 {
         String url = "rmi://localhost:8971/obj";
         //新版jdk8u以上 不加这句话报错 The object factory is untrusted.
         //Set the system property 'com.sun.jndi.rmi.object.trustURLCodebase' to 'true'.
+        // 介绍codebase的文章 https://docs.oracle.com/javase/1.5.0/docs/guide/rmi/codebase.html
         System.setProperty("com.sun.jndi.ldap.object.trustURLCodebase", "true");
         System.setProperty("com.sun.jndi.rmi.object.trustURLCodebase", "true");
         InitialContext initialContext = new InitialContext();
