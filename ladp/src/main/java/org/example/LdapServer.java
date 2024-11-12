@@ -17,7 +17,9 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
+/**
+ * 适用于JDK8u191以下版本
+ */
 public class LdapServer {
     private static final String LDAP_BASE = "dc=example,dc=com";
 
