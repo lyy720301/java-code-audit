@@ -12,9 +12,11 @@
 
 注：在高版本JDK(8u191)以上攻击默认是无效的，因为限制了从远程加载类，具体配置名为`com.sun.jndi.ldap.object.trustURLCodebase`
 
+本地不要保存Evil.java，要不然就会从本地记载Evil，这样高版本下也是可以加载的。
+
 ### 高版本绕过方式
 #### 1. JNDI + RMI
 利用tomcat8中的org.apache.naming.factory.BeanFactory
 #### 2. JNDI + LDAP
-
 利用javaSerializedData属性
+
