@@ -21,6 +21,9 @@ public class Main {
         );
 
         // 创建代理对象
+        /**
+         * 这个代理类继承了Proxy，实现了ByeService
+         */
         ByeService byeServiceProxy = (ByeService) Proxy.newProxyInstance(
                 byeService.getClass().getClassLoader(),
                 byeService.getClass().getInterfaces(),
