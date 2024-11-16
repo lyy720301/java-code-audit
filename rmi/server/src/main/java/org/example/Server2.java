@@ -13,6 +13,10 @@ public class Server2 {
     public static void main(String[] args) throws RemoteException, NamingException, AlreadyBoundException {
         // 提前起一个服务，根目录下放上test.class文件
         String url = "http://127.0.0.1:888/";
+        /*
+        className 指定类名称
+        factory 指定创建该类的工厂（须实现ObjectFactory）
+         */
         Reference reference = new Reference("test", "test", url);
         ReferenceWrapper referenceWrapper = new ReferenceWrapper(reference);
         Registry reg = LocateRegistry.getRegistry(8971);

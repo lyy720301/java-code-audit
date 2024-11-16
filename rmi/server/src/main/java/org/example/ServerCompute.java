@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.File;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -21,7 +22,11 @@ public class ServerCompute implements Compute {
     }
 
     public static void main(String[] args) {
-        System.setProperty("java.security.policy", "C:\\Users\\44410\\IdeaProjects\\java-code-audit\\rmi\\server\\src\\main\\resources\\server.policy");
+        // 获取项目根目录
+        String basePath = new File("").getAbsolutePath();
+        // 构建相对路径
+        String policyPath = basePath + "/rmi/server/src/main/resources/server.policy";
+        System.setProperty("java.security.policy", policyPath);
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
