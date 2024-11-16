@@ -10,13 +10,14 @@ version < 2.0b6
 
 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2510
 
-BeanShell可以生成代理对象，在Java中调用该代理对象的方法最终执行的是BeanShell脚本中定义的方法。  
+BeanShell中XThis类的invocationHandler属性可以用于生成代理对象，在Java中调用该代理对象的方法最终执行的是BeanShell脚本中定义的同名方法。  
 因此，只需要在BeanShell脚本中定义包含恶意代码的方法，就可以利用漏洞进行攻击。  
-可以通过反序列化触发特定方法实现漏洞利用。PriorityQueue对象在反序列化时会执行以下链路：
+可以通过反序列化触发特定方法实现漏洞利用。  
+PriorityQueue对象在反序列化时会执行以下链路：
 
 `readObject() -> heapify() -> siftDown() -> siftDownUsingComparator() -> compare()`
 
-那么我们可以通过对PriorityQueue对象中的comparator属性进行代理，使得应用在反序列化时调用compare调用预先定义好的恶意方法。  
+那么我们可以通过对PriorityQueue对象中的comparator属性进行代理，使得应用在反序列化时调用预先定义好的compare恶意方法。  
 具体poc构造见[BeanShellPOC.java](src/main/java/org/example/BeanShellPOC.java)  
 大体思路是通过反射获取XThis对象的invocationHandler属性，通过该handler创建Comparator代理对象，然后将该代理对象通过反射赋值给PriorityQueue对象，这样在PriorityQueue反序列化时就能执行预先定义好的compare方法。
 
