@@ -10,3 +10,4 @@
 - [Spring SpEL](./spring_spel)
 - [表达式注入](./expression-injection)
   - [BeanShell](./expression-injection/bsh) 
+  - [FreeMarker](./expression-injection/freemarker)
