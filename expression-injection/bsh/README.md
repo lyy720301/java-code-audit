@@ -21,12 +21,8 @@ PriorityQueue对象在反序列化时会执行以下链路：
 具体poc构造见[BeanShellPOC.java](src/main/java/org/example/BeanShellPOC.java)  
 大体思路是通过反射获取XThis对象的invocationHandler属性，通过该handler创建Comparator代理对象，然后将该代理对象通过反射赋值给PriorityQueue对象，这样在PriorityQueue反序列化时就能执行预先定义好的compare方法。
 
-
-
-
-
-
 ## 调用链
+
 ```text
 at java.lang.ProcessBuilder.start(ProcessBuilder.java:1007)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -66,5 +62,3 @@ at java.lang.ProcessBuilder.start(ProcessBuilder.java:1007)
 	at org.example.Deserializer.deserialize(Deserializer.java:22)
 	at org.example.BeanShellPOC.main(BeanShell.java:55)
 ```
-
-
